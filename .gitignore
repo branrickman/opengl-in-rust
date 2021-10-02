@@ -1,0 +1,8 @@
+/target
+main.exe
+main.pdb
+
+cargo.lock
+cargo
+
+SDL2.dll
