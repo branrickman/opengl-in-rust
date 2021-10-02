@@ -49,11 +49,11 @@ fn main() {
 
     shader_program.set_used();
 
-    //define vertices
+    //define vertices (one vertex per line, 3 coord, 3 color)
     let vertices: Vec<f32> = vec![
-        -0.5, -0.5, 0.0,
-         0.5, -0.5, 0.0,
-         0.0,  0.5, 0.0
+        -0.5, -0.5, 0.0,  1.0, 0.0, 0.0,
+         0.5, -0.5, 0.0,  0.0, 1.0, 0.0,
+         0.0,  0.5, 0.0,  0.0, 0.0, 1.0,
     ];
 
     //create vertex buffer object
@@ -89,8 +89,18 @@ fn main() {
             3, //number of components per generic vertex attribute
             gl::FLOAT, //data type
             gl::FALSE, //normalization-- int-to-float conversion?
-            (3 * std::mem::size_of::<f32>()) as gl::types::GLint, //"stride", or byte offset between consecutive vertex attributes
+            (6 * std::mem::size_of::<f32>()) as gl::types::GLint, //"stride", or byte offset between consecutive vertex attributes
             std::ptr::null(), //offset of first component ?
+        );
+
+        gl::EnableVertexAttribArray(1);
+        gl::VertexAttribPointer(
+            1, //index of attribute
+            3, //number of components per attribute
+            gl::FLOAT, //data type
+            gl::FALSE, //normalized?
+            (6 * std::mem::size_of::<f32>()) as gl::types::GLint, //stride
+            (3 * std::mem::size_of::<f32>()) as *const gl::types::GLvoid,  //initial offset
         );
 
         gl::BindBuffer(gl::ARRAY_BUFFER, 0); //unbind vertex buffer object
